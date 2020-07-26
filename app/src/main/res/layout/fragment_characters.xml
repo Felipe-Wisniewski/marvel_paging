@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="homeViewModel"
+            type="com.wisnitech.marvelpaging.ui.characters.CharactersViewModel" />
+    </data>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -52,13 +59,15 @@
                     android:id="@+id/txt_balance_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="$ 41.706,37"
+                    android:text="@{homeViewModel.balance}"
                     android:textColor="#450664"
-                    android:textSize="54sp" />
+                    android:textSize="54sp"
+                    app:visible="@{homeViewModel.showBalance}" />
 
-                <FrameLayout
-                    android:id="@+id/frame_balance_hide"
-                    android:layout_width="0dp"
+                <View
+                    android:id="@+id/view_balance_hide"
+                    visible="@{!homeViewModel.showBalance}"
+                    android:layout_width="136dp"
                     android:layout_height="3dp"
                     android:background="#450664" />
 
@@ -68,13 +77,15 @@
                     android:layout_height="wrap_content"
                     android:text="Saldo Oculto"
                     android:textColor="#450664"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    app:visible="@{!homeViewModel.showBalance}" />
 
                 <ImageView
                     android:id="@+id/iv_eye_closed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_eye_closed" />
+                    app:srcCompat="@drawable/ic_eye_closed"
+                    app:visible="@{!homeViewModel.showBalance}" />
 
                 <Button
                     android:id="@+id/btn_cashin"
@@ -92,7 +103,7 @@
                     android:id="@+id/btn_hide_balance"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="22dp"
                     app:layout_constraintBottom_toBottomOf="@+id/btn_cashin"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/btn_cashin"
@@ -102,48 +113,64 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.constraintlayout.motion.widget.MotionLayout
-            android:id="@+id/motion_layout_home_search"
-            android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            app:layoutDescription="@xml/fragment_home_search"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-            <TextView
-                android:id="@+id/txt_search_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Buscar comprobante"
-                android:textSize="14sp" />
-
-            <ImageView
-                android:id="@+id/btn_operations_search"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                app:srcCompat="@drawable/ic_search_home" />
-
-            <ImageView
-                android:id="@+id/btn_operations_filter"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_filter" />
-
-        </androidx.constraintlayout.motion.widget.MotionLayout>
-
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_refresh_operations"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="57.5dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <androidx.core.widget.NestedScrollView
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constrait_seach"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="72dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:id="@+id/search_operations_label"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/txt_search_label"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Buscar comprobante"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:id="@+id/btn_operations_search"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        app:srcCompat="@drawable/ic_search_home" />
+
+                </LinearLayout>
+
+                <!--<ImageView
+                        android:id="@+id/btn_operations_filter"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        app:srcCompat="@drawable/ic_filter" />-->
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipe_refresh_operations"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="1.5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constrait_seach">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_home_operations"
@@ -153,9 +180,9 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_character" />
 
-            </androidx.core.widget.NestedScrollView>
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
