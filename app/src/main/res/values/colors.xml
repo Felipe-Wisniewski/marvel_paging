@@ -1,7 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
-    <color name="homeToolbar">#f3a58cf0</color>
+    <color name="colorPrimary">#cb19f0</color>
+    <color name="colorPrimaryDark">#5400A2</color>
+    <color name="colorAccent">#7F198C</color>
+
+    <!--Zepplin colors-->
+    <color name="primary_900">#3b0071</color>
+    <color name="primary_800">#5400a2</color>
+    <color name="primary_700">#651b99</color>
+    <color name="primary_000">#f2e5f5</color>
+    <color name="secondary_900">#191919</color>
+    <color name="secondary_700">#585858</color>
+    <color name="secondary_500">#949494</color>
+    <color name="secondary_000">#f6f6f6</color>
+    <color name="light_gray">#fafafa</color>
+    <color name="color_white">@android:color/white</color>
+    <color name="purple_blue">#8128d4</color>
+    <color name="black_four">#1c1c1c</color>
+    <color name="very_light_pink">#c3c3c3</color>
+    <color name="black_two">#0a0a0a</color>
+    <color name="transparent">#00000000</color>
+    <color name="input_error_color">@color/strawberry</color>
+    <color name="gray_light">#b2b2b2</color>
+
+    <color name="rating_dialog_end_color">#F7BE52</color>
+    <color name="rating_dialog_center_color">#C34B74</color>
+    <color name="rating_dialog_start_color">#AB1787</color>
+    <color name="gray">#575757</color>
+    <color name="icon_disabled_color">#777777</color>
+    <color name="icon_enabled_color">#5400a2</color>
+    <color name="searchview_gray">#f0eff3</color>
+
+    <color name="primaryDarkPlan">#3e085d</color>
+
+    <!-- Rebranding -->
+    <color name="black_text">#1c1c1c</color>
+    <color name="black06">#2e313a</color>
+    <color name="background_card_toolbar">#f3a58cf0</color>
+    <color name="background_profile_picture">#fff1d6</color>
+    <color name="title_text_color">#450664</color>
+    <color name="purpleish_blue">#7048e7</color>
+    <color name="lavender">#a58cf0</color>
+    <color name="royalPurple">#54007d</color>
+    <color name="plumPurple">#450664</color>
+    <color name="paleGrey">#f0eff3</color>
+    <color name="paleGreyTwo">#f4f7fa</color>
+    <color name="brownGrey">#858585</color>
+    <color name="very_light_pink_four">#b9b9b9</color>
+    <color name="strawberry">#f9263f</color>
+    <color name="loadingBackground">#f7f7f7</color>
+    <color name="brown_grey_two">#858585</color>
+    <color name="charcoalGrey">#2e313a</color>
+    <color name="silver">#b7bec4</color>
+    <color name="pale">#fff1d6</color>
+    <color name="color_gray">#333333</color>
+    <color name="black_three">#2b2b2b</color>
+    <color name="field_hint_text_color">#777777</color>
+
+    <!--    Transactions colors (libreria rebranding) -->
+    <color name="black01">#2e313a</color>
+    <color name="black02">#4a4a54</color>
+    <color name="black03">#67727c</color>
+    <color name="black04">#b7bec4</color>
+    <color name="black05">#f4f7fa</color>
+    <color name="black05_50">#80f4f7fa</color>
+    <color name="white">#ffffff</color>
+    <color name="transactionColor01">#009161</color>
+    <color name="transactionColor02">#05c686</color>
+    <color name="transactionColor03">#52efb2</color>
+    <color name="transactionColor04">#eaf9ef</color>
+    <color name="errorColor01">#d61e2c</color>
+    <color name="errorColor02">#f9263f</color>
+    <color name="errorColor03">#f98284</color>
+    <color name="errorColor04">#f9e8ea</color>
+    <color name="primary02Dark">#7048e7</color>
+    <color name="primary02">#a58cf0</color>
+    <color name="primary02Light">#ded8fe</color>
+    <color name="secondary02Black">#dc911b</color>
+    <color name="secondary02">#fdb933</color>
+    <color name="secondary02Light">#fff1d6</color>
+    <color name="secondary01Dark">#59004f</color>
+    <color name="secondary01">#801467</color>
+    <color name="secondary01Light">#f2e2f0</color>
+    <color name="primary01DarkButton">#380551</color>
+    <color name="primary01Dark">#54007d</color>
+    <color name="primary03Dark">#450664</color>
+    <color name="primary01">#7b3da6</color>
+    <color name="primary01Light">#f0eeff</color>
 </resources>

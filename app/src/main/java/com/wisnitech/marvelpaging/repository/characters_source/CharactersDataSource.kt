@@ -12,13 +12,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
-class CharactersDataSource(private val api: ApiService, private val scope: CoroutineScope) :
+class CharactersDataSource(private val api: ApiService,
+                           private val query: String,
+                           private val scope: CoroutineScope) :
     PageKeyedDataSource<Int, CharacterWeb>() {
 
     private var supervisorJob = SupervisorJob()
 
-    private val _charactersStatus = MutableLiveData(Status.LOADING)
-    val charactersStatus: LiveData<Status> get() = _charactersStatus
+    val charactersStatus = MutableLiveData<Status>()
 
     override fun loadInitial(params: LoadInitialParams<Int>,
                              callback: LoadInitialCallback<Int, CharacterWeb>) {
@@ -53,15 +54,21 @@ class CharactersDataSource(private val api: ApiService, private val scope: Corou
                                callback: (List<CharacterWeb>) -> Unit) {
 
         scope.launch(jobError() + supervisorJob) {
-            val response = api.getCharacters(requestedPage * loadedPage)
+
+            Log.d("flmwg","query: $query")
+
+            val response = api.getCharacters(offset = requestedPage * loadedPage,
+                nameStartsWith = if (query != "") query else null)
+
             Log.d("flmwg","results.size: ${response.data.results.size}")
-            _charactersStatus.postValue(Status.SUCCESS)
+
+            charactersStatus.postValue(Status.SUCCESS)
             callback(response.data.results)
         }
     }
 
     private fun jobError() = CoroutineExceptionHandler { _, throwable ->
         Log.e("FLMWG", "CharactersDataSource.jobError", throwable)
-        _charactersStatus.postValue(Status.ERROR)
+        charactersStatus.postValue(Status.ERROR)
     }
 }

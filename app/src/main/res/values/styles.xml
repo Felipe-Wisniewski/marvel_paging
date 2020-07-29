@@ -1,10 +1,70 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
+    <!--<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        &lt;!&ndash; Customize your theme here. &ndash;&gt;
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>-->
+
+    <!-- Material Components theme. -->
+    <style name="AppThemeTransactions" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary01Dark</item>
+        <item name="colorPrimaryDark">@color/primary01Dark</item>
+        <item name="colorPrimaryVariant">@color/primary01</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/primary01Dark</item>
+        <item name="colorSecondaryVariant">@color/primary01</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="android:fontFamily">@font/superdigital_regular</item>
+<!--        <item name="textInputStyle">@style/Widget.Superdigital.TextInputLayout</item>-->
+<!--        <item name="buttonStyle">@style/Widget.Superdigital.Button</item>-->
+<!--        <item name="materialButtonStyle">@style/Widget.Superdigital.Button</item>-->
     </style>
 
+    <style name="Widget.Superdigital.SearchView" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.SearchView</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="boxStrokeWidth">@null</item>
+        <item name="boxStrokeWidthFocused">@null</item>
+        <item name="startIconDrawable">@drawable/ic_search</item>
+        <item name="startIconTint">@color/black01</item>
+        <item name="hintEnabled">false</item>
+        <item name="endIconDrawable">@drawable/ic_close</item>
+        <item name="endIconTint">@color/black01</item>
+        <item name="endIconMode">clear_text</item>
+    </style>
+
+    <style name="Widget.Superdigital.SearchView.AutoCompleteTextView" parent="Widget.AppCompat.AutoCompleteTextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/bg_search_selector</item>
+        <item name="android:fontFamily">@font/superdigital_medium</item>
+        <item name="android:imeOptions">actionSearch</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textAppearance">@style/TextAppearance.Superdigital.Search</item>
+        <item name="android:textColorHint">@color/black02</item>
+    </style>
+
+    <style name="TextAppearance.Superdigital.Search">
+        <item name="fontFamily">@font/superdigital_medium</item>
+        <item name="android:fontFamily">@font/superdigital_medium</item>
+        <item name="android:textColor">@color/black01</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="ThemeOverlay.SearchView" parent="AppThemeTransactions">
+        <item name="autoCompleteTextViewStyle">
+            @style/Widget.Superdigital.SearchView.AutoCompleteTextView
+        </item>
+    </style>
+
+    <style name="TextAppearance.Superdigital" parent="">
+        <item name="android:textColor">@color/black01</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/superdigital_regular</item>
+        <item name="fontFamily">@font/superdigital_regular</item>
+    </style>
 </resources>

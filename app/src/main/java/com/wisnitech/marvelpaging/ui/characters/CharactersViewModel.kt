@@ -1,23 +1,17 @@
 package com.wisnitech.marvelpaging.ui.characters
 
 import android.os.Handler
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations.switchMap
 import androidx.lifecycle.ViewModel
-import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.wisnitech.marvelpaging.model.CharacterWeb
-import com.wisnitech.marvelpaging.repository.characters_source.CharactersDataSourceFactory
+import com.wisnitech.marvelpaging.repository.CharactersRepository
 import com.wisnitech.marvelpaging.repository.service.Status
-import org.koin.java.KoinJavaComponent.inject
 
-class CharactersViewModel : ViewModel() {
+class CharactersViewModel(private val repo: CharactersRepository) : ViewModel() {
 
     private var showBalanceControl = false      // SHAREDPREFERENCES
-
-    private val charactersSource: CharactersDataSourceFactory by inject(CharactersDataSourceFactory::class.java)
 
     private val _showBalance = MutableLiveData(false)
     val showBalance: LiveData<Boolean> get() = _showBalance
@@ -28,14 +22,12 @@ class CharactersViewModel : ViewModel() {
     private val _loadingBalance = MutableLiveData<Status>()
     val loadingBalance: LiveData<Status> = _loadingBalance
 
-    private val _characters = LivePagedListBuilder(charactersSource, pagedListConfig()).build()
-    val characters: LiveData<PagedList<CharacterWeb>> get() = _characters
-
-    private val _charactersStatus = switchMap(charactersSource.source) { it.charactersStatus }
+    private val _charactersStatus = MutableLiveData<Status>()
     val charactersStatus: LiveData<Status> get() = _charactersStatus
 
     private val _isSearching = MutableLiveData(false)
     val isSearching: LiveData<Boolean> get() = _isSearching
+
 
     fun showBalance() {
         showBalanceControl = !showBalanceControl
@@ -57,18 +49,10 @@ class CharactersViewModel : ViewModel() {
         },300)
     }
 
-    fun refreshCharacters() {
-        charactersSource.source.value?.invalidate()
-    }
+    fun searchCharacters(query: String = ""): LiveData<PagedList<CharacterWeb>> {
+        val repoResult = repo.getCharacters(query)
+        _charactersStatus.value = repoResult.listingStatus.value
 
-    fun searchOperations(query: String = "") {
-        Log.d("flmwg","search query: $query")
+        return repoResult.pagedList
     }
-
-    private fun pagedListConfig() = PagedList.Config.Builder()
-        .setPageSize(20)
-        .setInitialLoadSizeHint(40)
-        .setPrefetchDistance(5)
-        .setEnablePlaceholders(false)
-        .build()
 }

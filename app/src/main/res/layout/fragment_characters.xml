@@ -17,7 +17,7 @@
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="210dp"
+            android:layout_height="230dp"
             android:background="@drawable/bg_card_toolbar_home">
 
             <androidx.constraintlayout.motion.widget.MotionLayout
@@ -118,49 +118,97 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constrait_seach"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_search"
                 android:layout_width="match_parent"
-                android:layout_height="72dp"
+                android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <LinearLayout
-                    android:id="@+id/search_operations_label"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="16dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraint_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    app:elevation="4dp">
 
-                    <TextView
-                        android:id="@+id/txt_search_label"
+                    <LinearLayout
+                        android:id="@+id/search_operations_label"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Buscar comprobante"
-                        android:textSize="14sp" />
+                        android:layout_height="0dp"
+                        android:background="@android:color/white"
+                        android:gravity="center_vertical"
+                        android:layout_margin="16dp"
+                        android:orientation="horizontal"
+                        app:visible="@{!homeViewModel.isSearching}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <ImageView
-                        android:id="@+id/btn_operations_search"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        app:srcCompat="@drawable/ic_search_home" />
+                        <!-- TODO('Globalization') -->
+                        <TextView
+                            android:id="@+id/txt_search_label"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Buscar comprobante"
+                            android:textSize="14sp" />
 
-                </LinearLayout>
+                        <ImageView
+                            android:id="@+id/btn_operations_search"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            app:srcCompat="@drawable/ic_search_home" />
 
-                <!--<ImageView
-                        android:id="@+id/btn_operations_filter"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        app:srcCompat="@drawable/ic_filter" />-->
+                    </LinearLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <LinearLayout
+                        android:id="@+id/search_operations_input"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:background="@android:color/white"
+                        android:gravity="center_vertical"
+                        android:layout_margin="16dp"
+                        android:orientation="horizontal"
+                        app:visible="@{homeViewModel.isSearching}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/search_view"
+                            style="@style/Widget.Superdigital.SearchView"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:endIconMode="custom"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:visibility="visible">
+
+                            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                                android:id="@+id/search_view_input"
+                                style="@style/Widget.Superdigital.SearchView.AutoCompleteTextView"
+                                android:hint="Buscar aqui"
+                                android:imeOptions="actionDone"
+                                android:inputType="textPersonName"
+                                android:maxLength="35" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+                    <!--<ImageView
+                            android:id="@+id/btn_operations_filter"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            app:srcCompat="@drawable/ic_filter" />-->
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
 
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/swipe_refresh_operations"
@@ -170,7 +218,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constrait_seach">
+                app:layout_constraintTop_toBottomOf="@+id/card_search">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_home_operations"

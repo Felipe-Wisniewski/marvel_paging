@@ -8,6 +8,7 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -26,7 +27,8 @@ class CharactersFragment : Fragment() {
     private val viewModel: CharactersViewModel by viewModel()
     private lateinit var binding: FragmentCharactersBinding
     private val charactersAdapter: CharactersAdapter by lazy { CharactersAdapter(this::onItemClick) }
-
+    private var querySearch = ""
+    
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,16 +43,19 @@ class CharactersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         coordinateMotion()
+        searchCharacterFrag()
         loadCharacters()
         observeShowBalance()
         setupSwipeRefresh()
+        setupSearch()
     }
 
     private fun coordinateMotion() {
         val listener = AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
             val seekPosition = -verticalOffset / binding.appbarLayout.totalScrollRange.toFloat()
-            Log.d("flmwg", "seekPosition: $seekPosition")
+
             motion_layout_home_toolbar.progress = seekPosition
+            //set appbar background color
         }
 
         appbar_layout.addOnOffsetChangedListener(listener)
@@ -63,20 +68,23 @@ class CharactersFragment : Fragment() {
             adapter = charactersAdapter
         }
 
-        viewModel.characters.observe(viewLifecycleOwner, Observer {
-            charactersAdapter.submitList(it)
-        })
-
         viewModel.charactersStatus.observe(viewLifecycleOwner, Observer {
             swipe_refresh_operations.isRefreshing = it == Status.LOADING
         })
     }
 
+    private fun searchCharacterFrag() {
+        viewModel.searchCharacters(querySearch).observe(viewLifecycleOwner, Observer {
+            charactersAdapter.submitList(it)
+        })
+    }
+
     private fun observeShowBalance() {
         viewModel.showBalance.observe(viewLifecycleOwner, Observer {
-            Log.d("flmwg","showBalance: $it")
-            val icon = ContextCompat.getDrawable(requireContext(),
-            if (it) R.drawable.ic_eye_show_enabled else R.drawable.ic_eye_hide_enabled)
+            val icon = ContextCompat.getDrawable(
+                requireContext(),
+                if (it) R.drawable.ic_eye_show_enabled else R.drawable.ic_eye_hide_enabled
+            )
             btn_hide_balance.setImageDrawable(icon)
         })
 
@@ -89,18 +97,45 @@ class CharactersFragment : Fragment() {
 
     private fun setupSwipeRefresh() {
         swipe_refresh_operations.setOnRefreshListener {
-            viewModel.refreshCharacters()
+            searchCharacterFrag()
         }
     }
 
+    private fun setupSearch() {
+        search_operations_label.setOnClickListener {
+            viewModel.isSearching(true)
 
+            search_view_input.apply {
+                performClick()
+                requestFocus()
+            }
+        }
+
+        search_view_input.addTextChangedListener {
+            if (!it.isNullOrBlank()) {
+                querySearch = it.toString()
+                searchCharacterFrag()
+            }
+        }
+
+        search_view.setEndIconOnClickListener {
+            search_view_input.setText("")
+
+            if (querySearch != "") {
+                querySearch = ""
+                searchCharacterFrag()
+            }
+
+            viewModel.isSearching(false)
+        }
+    }
 
     override fun onResume() {
         super.onResume()
         (activity as MainActivity).setStatusBarColor(
             ContextCompat.getColor(
                 requireActivity(),
-                R.color.homeToolbar
+                R.color.background_card_toolbar
             )
         )
         viewModel.getBalance()
@@ -109,7 +144,4 @@ class CharactersFragment : Fragment() {
     companion object {
         fun newInstance() = CharactersFragment()
     }
-
-
-
 }
