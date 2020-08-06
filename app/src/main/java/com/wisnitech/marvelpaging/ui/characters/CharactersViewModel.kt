@@ -51,7 +51,10 @@ class CharactersViewModel(private val repo: CharactersRepository) : ViewModel() 
 
     fun searchCharacters(query: String = ""): LiveData<PagedList<CharacterWeb>> {
         val repoResult = repo.getCharacters(query)
-        _charactersStatus.value = repoResult.listingStatus.value
+
+        repoResult.listingStatus.observeForever {
+            _charactersStatus.value = it
+        }
 
         return repoResult.pagedList
     }

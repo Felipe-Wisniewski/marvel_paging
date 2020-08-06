@@ -19,7 +19,7 @@ class CharactersDataSource(private val api: ApiService,
 
     private var supervisorJob = SupervisorJob()
 
-    val charactersStatus = MutableLiveData<Status>()
+    val charactersStatus = MutableLiveData(Status.DEFAULT)
 
     override fun loadInitial(params: LoadInitialParams<Int>,
                              callback: LoadInitialCallback<Int, CharacterWeb>) {
@@ -56,6 +56,7 @@ class CharactersDataSource(private val api: ApiService,
         scope.launch(jobError() + supervisorJob) {
 
             Log.d("flmwg","query: $query")
+            charactersStatus.postValue(Status.LOADING)
 
             val response = api.getCharacters(offset = requestedPage * loadedPage,
                 nameStartsWith = if (query != "") query else null)

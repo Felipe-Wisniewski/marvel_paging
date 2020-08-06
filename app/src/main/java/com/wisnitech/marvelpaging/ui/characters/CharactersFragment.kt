@@ -69,7 +69,8 @@ class CharactersFragment : Fragment() {
         }
 
         viewModel.charactersStatus.observe(viewLifecycleOwner, Observer {
-            swipe_refresh_operations.isRefreshing = it == Status.LOADING
+            Log.d("flmwg","loading: $it")
+            swipe_refresh_operations.isRefreshing = it == Status.DEFAULT
         })
     }
 

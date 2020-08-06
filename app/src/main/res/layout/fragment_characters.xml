@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="com.wisnitech.marvelpaging.repository.service.Status" />
+
         <variable
             name="homeViewModel"
             type="com.wisnitech.marvelpaging.ui.characters.CharactersViewModel" />
@@ -136,15 +138,15 @@
                         android:id="@+id/search_operations_label"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
+                        android:layout_margin="16dp"
                         android:background="@android:color/white"
                         android:gravity="center_vertical"
-                        android:layout_margin="16dp"
                         android:orientation="horizontal"
-                        app:visible="@{!homeViewModel.isSearching}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:visible="@{!homeViewModel.isSearching}">
 
                         <!-- TODO('Globalization') -->
                         <TextView
@@ -167,15 +169,15 @@
                         android:id="@+id/search_operations_input"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
+                        android:layout_margin="16dp"
                         android:background="@android:color/white"
                         android:gravity="center_vertical"
-                        android:layout_margin="16dp"
                         android:orientation="horizontal"
-                        app:visible="@{homeViewModel.isSearching}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:visible="@{homeViewModel.isSearching}">
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/search_view"
@@ -183,10 +185,10 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            app:endIconMode="custom"
                             android:paddingLeft="15dp"
                             android:paddingRight="15dp"
-                            android:visibility="visible">
+                            android:visibility="visible"
+                            app:endIconMode="custom">
 
                             <com.google.android.material.textfield.MaterialAutoCompleteTextView
                                 android:id="@+id/search_view_input"
@@ -229,6 +231,14 @@
                     tools:listitem="@layout/item_character" />
 
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+            <ProgressBar
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                app:layout_constraintBottom_toBottomOf="@+id/swipe_refresh_operations"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:visible="@{homeViewModel.charactersStatus == Status.LOADING}" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
